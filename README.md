@@ -1,44 +1,35 @@
 # Local MCP
 
-A Docker Compose wrapper for the [Context7 MCP server](https://github.com/upstash/context7). It uses stdio transport, so an MCP client launches the Compose service and communicates over its standard input/output.
+Docker Compose services for local Context7, time, weather, Dockerhub, and Next.js DevTools MCP servers.
 
 ## Setup
 
-1. Create the ignored credential file and set your Context7 API key:
+```bash
+cp .env.example .env
+docker compose build
+```
 
-   ```bash
-   cp .env.example .env
-   ```
-
-   Set `CONTEXT7_API_KEY` in `.env`. The file is ignored by Git.
-
-2. Build the image:
-
-   ```bash
-   docker compose build
-   ```
+Add `CONTEXT7_API_KEY` and `dockerhub.pat_token` to `.env`.
 
 ## Connect an MCP client
 
-Configure a stdio MCP server that runs the Compose service:
+Configure the required service as a stdio MCP server:
 
 ```json
 {
-  "mcpServers": {
-    "context7": {
-      "command": "docker",
-      "args": [
-        "compose",
-        "-f",
-        "/absolute/path/to/local-mcp/compose.yaml",
-        "run",
-        "--rm",
-        "-T",
-        "context7"
-      ]
-    }
-  }
+  "command": "docker",
+  "args": [
+    "compose",
+    "-f",
+    "/absolute/path/to/local-mcp/compose.yaml",
+    "run",
+    "--rm",
+    "-T",
+    "context7"
+  ]
 }
 ```
 
-Replace the path with this repository's absolute path. Docker Compose loads the adjacent `.env` file and supplies `CONTEXT7_API_KEY` to the container. Do not run `docker compose up`: stdio MCP servers must be launched by their client.
+Replace `context7` with `time`, `dockerhub`, or `weather` as needed, and replace the compose-file path with this repository's absolute path.
+
+The MCP client starts and stops the service. Do not use `docker compose up`.
