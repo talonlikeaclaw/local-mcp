@@ -6,3 +6,36 @@ services:
       CONTEXT7_API_KEY: ${CONTEXT7_API_KEY:?Set CONTEXT7_API_KEY in .env}
     stdin_open: true
     tty: false
+
+  time:
+    image: docker/mcp-gateway:v0.40.4@sha256:ef76294cd792da424bbcae51122b8a3ca5793c2c112eef3c25889bebbed614a6
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - mcp-network
+    stdin_open: true
+    tty: false
+    command: --servers=time --transport=stdio
+
+  dockerhub:
+    image: docker/mcp-gateway:v0.40.4@sha256:ef76294cd792da424bbcae51122b8a3ca5793c2c112eef3c25889bebbed614a6
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./.env:/run/secrets/mcp.env:ro
+    networks:
+      - mcp-network
+    stdin_open: true
+    tty: false
+    command: --servers=dockerhub --transport=stdio --secrets=/run/secrets/mcp.env
+
+  weather:
+    image: ghcr.io/cmer81/open-meteo-mcp@sha256:794398f48749e81c3bee36d7ea92348b66cca5c1317b26f9bbb4dca335fa6a59
+    environment:
+      TRANSPORT: stdio
+    networks:
+      - mcp-network
+    stdin_open: true
+    tty: false
+
+networks:
+  mcp-network:
