@@ -1,0 +1,5 @@
+FROM node:22-alpine
+
+RUN npm install --global next-devtools-mcp@latest
+
+ENTRYPOINT ["next-devtools-mcp"]

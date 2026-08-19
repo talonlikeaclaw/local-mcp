@@ -36,6 +36,17 @@ services:
       - mcp-network
     stdin_open: true
     tty: false
+    healthcheck:
+      disable: true
+
+  next-devtools:
+    build:
+      context: .
+      dockerfile: Dockerfile.next-devtools
+    network_mode: host
+    stdin_open: true
+    tty: false
+
 
 networks:
   mcp-network:

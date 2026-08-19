@@ -30,6 +30,6 @@ Configure the required service as a stdio MCP server:
 }
 ```
 
-Replace `context7` with `time`, `dockerhub`, or `weather` as needed, and replace the compose-file path with this repository's absolute path.
+`next-devtools` requires a Next.js 16+ development server running on the host. Its container uses host networking to discover the development server; call `nextjs_index` first to list its available runtime tools.
 
 The MCP client starts and stops the service. Do not use `docker compose up`.
