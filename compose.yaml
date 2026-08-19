@@ -30,6 +30,7 @@ services:
 
   weather:
     image: ghcr.io/cmer81/open-meteo-mcp@sha256:794398f48749e81c3bee36d7ea92348b66cca5c1317b26f9bbb4dca335fa6a59
+    platform: linux/amd64
     environment:
       TRANSPORT: stdio
     networks:

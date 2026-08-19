@@ -11,21 +11,18 @@ docker compose build
 
 Add `CONTEXT7_API_KEY` and `dockerhub.pat_token` to `.env`.
 
+The weather image is published for `linux/amd64`; Docker Desktop emulates it on Apple Silicon.
+
 ## Connect an MCP client
 
-Configure the required service as a stdio MCP server:
+Configure the required service as a stdio MCP server. Set `LOCAL_MCP_DIR` to the absolute path of this checkout; `sh -c` expands it on macOS and Linux:
 
 ```json
 {
-  "command": "docker",
+  "command": "sh",
   "args": [
-    "compose",
-    "-f",
-    "/absolute/path/to/local-mcp/compose.yaml",
-    "run",
-    "--rm",
-    "-T",
-    "context7"
+    "-c",
+    "exec docker compose -f \"${LOCAL_MCP_DIR:?Set LOCAL_MCP_DIR to the local-mcp checkout}/compose.yaml\" run --rm -T context7"
   ]
 }
 ```
