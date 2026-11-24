@@ -1,6 +1,6 @@
 # Local MCP
 
-Docker Compose services for local Context7, time, weather, Dockerhub, Anytype, and Next.js DevTools MCP servers.
+Docker Compose services for local Context7, time, weather, Dockerhub, and Next.js DevTools MCP servers.
 
 ## Setup
 
@@ -9,9 +9,7 @@ cp .env.example .env
 docker compose build
 ```
 
-Add `CONTEXT7_API_KEY`, `dockerhub.pat_token`, and `ANYTYPE_API_KEY` to `.env`.
-
-`ANYTYPE_API_KEY` is created on the Anytype LXC (215) with `anytype auth apikey create`; see the Anytype section of the homelab README. The Anytype MCP server fetches the heart's OpenAPI document at startup and fails to start if `ANYTYPE_API_BASE_URL` is unreachable, so the `anytype` entry in the omp MCP config is left disabled by choice — flip `"enabled"` to `true` for the sessions that should have the tools.
+Add `CONTEXT7_API_KEY` and `dockerhub.pat_token` to `.env`.
 
 The weather image is published for `linux/amd64`; Docker Desktop emulates it on Apple Silicon.
 
